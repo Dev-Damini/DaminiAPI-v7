@@ -20,7 +20,6 @@ import {
 import { fetchAnalyticsStats, logAnalyticsEvent } from '@/lib/analytics';
 import { supabase } from '@/lib/supabase';
 import ContactDevModal from '@/components/features/ContactDevModal';
-import ThreeBackground from '@/components/three/ThreeBackground';
 import DeveloperProfile from '@/components/features/DeveloperProfile';
 import type {
   DaminiResponse, TempMailMessage, AnalyticsStats, MediaResult,
@@ -188,10 +187,10 @@ function ExecBtn({ onClick, disabled, loading, label, loadingLabel }: {
     <button onClick={onClick} disabled={disabled || loading}
       className="w-full flex items-center justify-center gap-2 py-2.5 text-xs font-mono font-bold uppercase tracking-widest transition-all disabled:opacity-40"
       style={{
-        background: loading ? 'rgba(59,130,246,0.5)' : 'linear-gradient(135deg,#1d4ed8,#3b82f6)',
+        background: loading ? 'rgba(59,130,246,0.4)' : 'linear-gradient(135deg,#1d4ed8,#3b82f6)',
         color: '#fff',
-        border: '1px solid rgba(59,130,246,0.3)',
-        borderRadius: 'var(--radius-sm)',
+        border: '1px solid rgba(59,130,246,0.35)',
+        borderRadius: '6px',
       }}>
       {loading ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : null}
       {loading ? loadingLabel : label}
@@ -686,7 +685,7 @@ function EndpointCard({ ep, onSuccess }: { ep: EndpointDef; onSuccess: () => voi
   return (
     <>
       <div className="endpoint-card">
-        <div style={{ display:'flex', alignItems:'center', gap:8, padding:'10px 14px', borderBottom:'1px solid var(--border)' }}>
+        <div style={{ display:'flex', alignItems:'center', gap:8, padding:'10px 14px', borderBottom:'1px solid var(--b1)' }}>
           <div className="flex items-center gap-1.5">
             {ep.methods.map((m) => <MethodPill key={m} method={m} />)}
           </div>
@@ -704,21 +703,21 @@ function EndpointCard({ ep, onSuccess }: { ep: EndpointDef; onSuccess: () => voi
             </button>
           </div>
         </div>
-        <div style={{ padding:'8px 14px', borderBottom:'1px solid var(--border)', background:'rgba(59,130,246,0.03)' }}>
+        <div style={{ padding:'8px 14px', borderBottom:'1px solid var(--b1)', background:'rgba(59,130,246,0.02)' }}>
           <code className="text-sm font-mono font-bold" style={{ color: 'var(--text-primary)' }}>{ep.path}</code>
         </div>
-        <div style={{ padding:'10px 14px', borderBottom:'1px solid var(--border)' }}>
+        <div style={{ padding:'10px 14px', borderBottom:'1px solid var(--b1)' }}>
           <p className="text-sm font-bold mb-1" style={{ color: 'var(--text-primary)' }}>{ep.title}</p>
           <p className="text-xs leading-relaxed" style={{ color: 'var(--text-secondary)' }}>{ep.description}</p>
         </div>
         <button onClick={() => setExpanded((p) => !p)}
           className="w-full flex items-center justify-between px-4 py-3 text-[10px] font-mono font-bold uppercase tracking-widest transition-colors hover:bg-black hover:text-white"
-          style={{ background: expanded ? 'rgba(59,130,246,0.07)' : 'transparent', color: expanded ? 'var(--text-primary)' : 'var(--text-sec)', borderTop:'1px solid var(--border)' }}>
+          style={{ background: expanded ? 'rgba(59,130,246,0.07)' : 'transparent', color: expanded ? 'var(--tp)' : 'var(--ts)', borderTop:'1px solid var(--b1)' }}>
           <span>↳ {expanded ? 'CLOSE TESTER' : 'TRY IT OUT'}</span>
           {expanded ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
         </button>
         {expanded && (
-          <div style={{ padding:'14px', borderTop:'1px solid var(--border)' }}>
+          <div style={{ padding:'14px', borderTop:'1px solid var(--b1)' }}>
             {renderTester()}
           </div>
         )}
@@ -738,16 +737,16 @@ function CategorySection({ id, icon: Icon, title, count, description, endpoints,
   if (!visible || endpoints.length === 0) return null;
   return (
     <section id={id}>
-      <div style={{ display:'flex', alignItems:'center', gap:10, padding:'10px 16px', borderRadius:'var(--radius-md)', background:'var(--panel)', border:'1px solid var(--border-md)', marginBottom:10, backdropFilter:'blur(12px)' }}>
-        <div style={{ width:32, height:32, borderRadius:6, flexShrink:0, background:'rgba(59,130,246,0.10)', border:'1px solid rgba(59,130,246,0.20)', display:'flex', alignItems:'center', justifyContent:'center' }}>
-          <Icon style={{ width:15, height:15, color:'var(--blue)' }} />
+      <div className="category-header">
+        <div style={{ width:30, height:30, borderRadius:6, flexShrink:0, background:'rgba(59,130,246,0.10)', border:'1px solid var(--b2)', display:'flex', alignItems:'center', justifyContent:'center' }}>
+          <Icon style={{ width:14, height:14, color:'var(--blue)' }} />
         </div>
         <div style={{ flex:1 }}>
-          <div style={{ display:'flex', alignItems:'center', gap:8 }}>
-            <span className="gradient-text" style={{ fontSize:12, fontFamily:"'JetBrains Mono',monospace", fontWeight:700, letterSpacing:'0.07em', textTransform:'uppercase' }}>{title}</span>
-            <span style={{ padding:'1px 7px', borderRadius:3, fontSize:9, fontFamily:"'JetBrains Mono',monospace", fontWeight:700, background:'rgba(59,130,246,0.08)', border:'1px solid rgba(59,130,246,0.18)', color:'var(--text-muted)' }}>{count}</span>
+          <div style={{ display:'flex', alignItems:'center', gap:8, marginBottom:2 }}>
+            <span className="gradient-text" style={{ fontSize:11, fontFamily:"'JetBrains Mono',monospace", fontWeight:700, letterSpacing:'0.07em', textTransform:'uppercase' }}>{title}</span>
+            <span style={{ padding:'1px 7px', borderRadius:3, fontSize:9, fontFamily:"'JetBrains Mono',monospace", fontWeight:600, background:'rgba(59,130,246,0.08)', border:'1px solid var(--b1)', color:'var(--tm)' }}>{count}</span>
           </div>
-          <p style={{ fontSize:10, fontFamily:"'JetBrains Mono',monospace", marginTop:2, color:'var(--text-muted)', margin:'2px 0 0' }}>{description}</p>
+          <p style={{ fontSize:10, fontFamily:"'JetBrains Mono',monospace", color:'var(--tm)', margin:0 }}>{description}</p>
         </div>
       </div>
       <div className="space-y-3">
@@ -1213,7 +1212,7 @@ export default function Index() {
   // ── Sidebar ───────────────────────────────────────────────────────────────
   const SidebarContent = () => (
     <div className="flex flex-col h-full">
-      <div className="border-b" style={{ borderColor: 'var(--border-medium)', padding: '12px 16px' }}>
+      <div style={{ borderBottom:'1px solid var(--b2)', padding:'12px 14px' }}>
         <div className="flex items-center gap-2">
           <DaminiLogo size={22} />
           <div>
@@ -1226,7 +1225,7 @@ export default function Index() {
         <span style={{ width:6, height:6, borderRadius:'50%', background:'var(--ok)', boxShadow:'0 0 6px rgba(16,185,129,0.5)', flexShrink:0, animation:'pulseBlue 2.2s ease-in-out infinite', display:'inline-block' }} />
         <span style={{ fontSize:9, fontFamily:"'JetBrains Mono',monospace", fontWeight:700, letterSpacing:'0.08em', textTransform:'uppercase', color:'var(--ok)' }}>STATUS: 200 / ONLINE</span>
       </div>
-      <nav className="flex-1 overflow-y-auto py-2">
+      <nav style={{ flex:1, overflowY:'auto', padding:'8px 8px', display:'flex', flexDirection:'column', gap:'2px' }}>
         {CATEGORIES.map(({ id, icon: Icon, label }) => {
           const isActive = activeCategory === id;
           return (
@@ -1240,17 +1239,17 @@ export default function Index() {
           );
         })}
       </nav>
-      <div className="px-3 pb-3">
+      <div style={{ padding:'8px' }}>
         <DeveloperProfile />
       </div>
-      <div className="border-t" style={{ borderColor: 'var(--border-medium)' }}>
+      <div style={{ borderTop:'1px solid var(--b2)', padding:'6px 8px', display:'flex', flexDirection:'column', gap:'2px' }}>
         <button onClick={() => setContactOpen(true)}
-          className="sidebar-nav-item mx-2 mb-1">
+          className="sidebar-nav-item">
           <MessageCircle className="w-3.5 h-3.5" />
           <span className="text-[10px] font-mono font-bold uppercase tracking-wider">Contact Dev</span>
         </button>
         <button onClick={toggleTheme}
-          className="sidebar-nav-item mx-2">
+          className="sidebar-nav-item">
           {theme === 'dark' ? <Sun className="w-3.5 h-3.5" /> : <Moon className="w-3.5 h-3.5" />}
           <span className="text-[10px] font-mono font-bold uppercase tracking-wider">{theme === 'dark' ? 'Light Mode' : 'Dark Mode'}</span>
         </button>
@@ -1262,12 +1261,11 @@ export default function Index() {
   const allFilteredEmpty = showAll && [fChat, fImage, fMusic, fVoice, fAnime, fMedia, fSocial, fResearch, fFun, fMail].every((l) => l.length === 0);
 
   return (
-    <div className="flex min-h-screen relative" style={{ background: 'var(--canvas)', color: 'var(--text-primary)' }}>
-      <ThreeBackground />
+    <div style={{ display:'flex', minHeight:'100vh', background:'var(--bg)', color:'var(--tp)', position:'relative' }}>
 
       {/* Desktop sidebar */}
       <aside className="hidden lg:flex flex-col w-52 flex-shrink-0 border-r sticky top-0 h-screen overflow-hidden"
-        style={{ borderColor: 'var(--border-md)', background: 'var(--sidebar-bg)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', zIndex: 10, position: 'sticky' }}>
+        style={{ borderColor:'var(--b2)', background:'var(--sidebar)', zIndex:10, position:'sticky', top:0 }}>
         <SidebarContent />
       </aside>
 
@@ -1275,17 +1273,17 @@ export default function Index() {
       {sidebarOpen && (
         <div className="fixed inset-0 z-50 lg:hidden">
           <div className="absolute inset-0 bg-black/60" onClick={() => setSidebarOpen(false)} />
-          <aside className="relative w-56 h-full flex flex-col border-r" style={{ borderColor: 'var(--border-medium)', background: 'var(--panel)' }}>
+          <aside className="relative w-56 h-full flex flex-col border-r" style={{ borderColor:'var(--b2)', background:'var(--sidebar)' }}>
             <SidebarContent />
           </aside>
         </div>
       )}
 
       {/* Main */}
-      <main className="flex-1 min-w-0" style={{ position: 'relative', zIndex: 5 }}>
+      <main style={{ flex:1, minWidth:0, background:'var(--bg)' }}>
 
         {/* Topbar */}
-        <div className="sticky top-0 z-40 border-b" style={{ background: 'var(--header-bg)', borderColor: 'var(--border-md)', backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)', boxShadow: '0 1px 0 rgba(59,130,246,0.15), 0 4px 24px rgba(0,0,0,0.3)' }}>
+        <div className="sticky top-0 z-40 border-b topbar">
           <div className="flex items-center gap-3 px-4 h-12">
             <button className="lg:hidden flex items-center gap-1.5" style={{ padding:'6px 10px', borderRadius:'var(--radius-sm)', fontSize:9, fontFamily:"'JetBrains Mono',monospace", fontWeight:700, textTransform:'uppercase', border:'1px solid var(--border-md)', color:'var(--text-muted)', background:'transparent', cursor:'pointer' }}
               onClick={() => setSidebarOpen(true)}>
@@ -1319,29 +1317,27 @@ export default function Index() {
           </div>
         </div>
 
-        <div className="p-4 max-w-3xl space-y-6">
+        <div style={{ padding:'20px', maxWidth:'900px', display:'flex', flexDirection:'column', gap:'16px' }}>
 
           {/* Overview */}
           {(isOverview || search) && (
             <>
-              <div style={{ border:'1px solid var(--border-md)', borderRadius:'var(--radius-lg)', overflow:'hidden', background:'var(--panel)', backdropFilter:'blur(16px)' }}>
-                <div style={{ display:'flex', alignItems:'center', padding:'10px 18px', borderBottom:'1px solid var(--border)', background:'rgba(59,130,246,0.04)' }}>
+              <div className="base-url-panel">
+                <div style={{ display:'flex', alignItems:'center', padding:'10px 16px', borderBottom:'1px solid var(--b1)', background:'rgba(59,130,246,0.03)' }}>
                   <div style={{ display:'flex', alignItems:'center', gap:8 }}>
-                    <span className="w-2 h-2 rounded-full pulse-active" style={{ background:'var(--ok)' }} />
-                    <span style={{ fontSize:9, fontFamily:"'JetBrains Mono',monospace", fontWeight:700, letterSpacing:'0.10em', color:'var(--blue-bright)' }}>BASE URL</span>
+                    <span style={{ width:7, height:7, borderRadius:'50%', background:'var(--ok)', display:'inline-block', boxShadow:'0 0 5px rgba(16,185,129,0.5)' }} className="pulse-active" />
+                    <span style={{ fontSize:9, fontFamily:"'JetBrains Mono',monospace", fontWeight:700, letterSpacing:'0.10em', color:'var(--blue2)' }}>BASE URL</span>
                   </div>
-                  <div style={{ marginLeft:'auto', display:'flex', alignItems:'center', gap:6 }}>
-                    <span style={{ fontSize:9, fontFamily:"'JetBrains Mono',monospace", color:'var(--text-muted)' }}>{totalEndpoints} endpoints live</span>
-                  </div>
+                  <span style={{ marginLeft:'auto', fontSize:9, fontFamily:"'JetBrains Mono',monospace", color:'var(--tm)' }}>{totalEndpoints} endpoints live</span>
                 </div>
-                <div style={{ display:'flex', alignItems:'center', padding:'14px 18px', gap:12 }}>
-                  <code style={{ flex:1, fontSize:14, fontFamily:"'JetBrains Mono',monospace", fontWeight:700, wordBreak:'break-all', color:'var(--text-primary)' }}>{dynamicBase}</code>
-                  <button onClick={copyBase} style={{ flexShrink:0, display:'flex', alignItems:'center', gap:6, padding:'6px 14px', borderRadius:'var(--radius-sm)', fontSize:10, fontFamily:"'JetBrains Mono',monospace", fontWeight:700, textTransform:'uppercase', border:`1px solid ${copiedBase ? 'var(--ok-bd)' : 'var(--border-md)'}`, background:copiedBase ? 'var(--ok-bg)' : 'var(--btn-ghost)', color:copiedBase ? 'var(--ok)' : 'var(--blue-bright)', cursor:'pointer' }}>
+                <div style={{ display:'flex', alignItems:'center', padding:'14px 16px', gap:12 }}>
+                  <code style={{ flex:1, fontSize:13, fontFamily:"'JetBrains Mono',monospace", fontWeight:700, wordBreak:'break-all', color:'var(--tp)' }}>{dynamicBase}</code>
+                  <button onClick={copyBase} style={{ flexShrink:0, display:'flex', alignItems:'center', gap:5, padding:'6px 14px', borderRadius:'6px', fontSize:10, fontFamily:"'JetBrains Mono',monospace", fontWeight:700, textTransform:'uppercase', border:`1px solid ${copiedBase ? 'var(--ok-bd)' : 'var(--b2)'}`, background:copiedBase ? 'var(--ok-bg)' : 'rgba(59,130,246,0.08)', color:copiedBase ? 'var(--ok)' : 'var(--blue2)', cursor:'pointer' }}>
                     {copiedBase ? <><CheckCheck className="w-3 h-3" />COPIED</> : <><Copy className="w-3 h-3" />COPY</>}
                   </button>
                 </div>
-                <div style={{ padding:'8px 18px', borderTop:'1px solid var(--border)', background:'rgba(59,130,246,0.02)' }}>
-                  <p style={{ fontSize:10, fontFamily:"'JetBrains Mono',monospace", color:'var(--text-muted)', margin:0 }}>
+                <div style={{ padding:'8px 16px', borderTop:'1px solid var(--b1)', background:'rgba(59,130,246,0.02)' }}>
+                  <p style={{ fontSize:10, fontFamily:"'JetBrains Mono',monospace", color:'var(--tm)', margin:0 }}>
                     Production API by <span className="gradient-text" style={{ fontWeight:700 }}>Dev Daminī</span> · Damini Codesphere
                   </p>
                 </div>
@@ -1349,29 +1345,29 @@ export default function Index() {
 
               <div style={{ display:'grid', gridTemplateColumns:'repeat(4,1fr)', gap:10 }}>
                 {[
-                  { label:'TOTAL',      value:statsLoading?'—':stats.total_requests.toLocaleString(), color:'var(--blue-bright)' },
+                  { label:'TOTAL',      value:statsLoading?'—':stats.total_requests.toLocaleString(), color:'var(--blue2)' },
                   { label:'EFFICIENCY', value:statsLoading?'—':`${stats.success_rate}%`,              color:'var(--cyan)' },
                   { label:'SUCCESS',    value:statsLoading?'—':stats.total_success.toLocaleString(),  color:'var(--ok)' },
                   { label:'ERRORS',     value:statsLoading?'—':stats.total_errors.toLocaleString(),   color:'var(--err)' },
                 ].map(({ label, value, color }) => (
-                  <div key={label} style={{ padding:'14px 12px', borderRadius:'var(--radius-md)', background:'var(--panel)', border:'1px solid var(--border-md)', backdropFilter:'blur(12px)' }}>
-                    <p style={{ fontSize:20, fontFamily:"'JetBrains Mono',monospace", fontWeight:700, color, lineHeight:1, margin:'0 0 6px' }}>{value}</p>
-                    <p style={{ fontSize:9, fontFamily:"'JetBrains Mono',monospace", letterSpacing:'0.08em', textTransform:'uppercase', color:'var(--text-muted)', margin:0 }}>{label}</p>
+                  <div key={label} className="stat-tile">
+                    <p style={{ fontSize:22, fontFamily:"'JetBrains Mono',monospace", fontWeight:700, color, lineHeight:1, margin:'0 0 6px' }}>{value}</p>
+                    <p style={{ fontSize:9, fontFamily:"'JetBrains Mono',monospace", letterSpacing:'0.08em', textTransform:'uppercase', color:'var(--tm)', margin:0 }}>{label}</p>
                   </div>
                 ))}
               </div>
 
               {/* Quick category links */}
               {isOverview && (
-                <div style={{ border:'1px solid var(--border-md)', borderRadius:'var(--radius-lg)', overflow:'hidden', background:'var(--panel)', backdropFilter:'blur(14px)' }}>
-                  <div style={{ padding:'10px 16px', borderBottom:'1px solid var(--border)', background:'rgba(59,130,246,0.04)' }}>
-                    <span style={{ fontSize:9, fontFamily:"'JetBrains Mono',monospace", fontWeight:700, letterSpacing:'0.10em', textTransform:'uppercase', color:'var(--blue-bright)' }}>DOCS — ENDPOINT CATEGORIES</span>
+                <div className="base-url-panel">
+                  <div style={{ padding:'10px 16px', borderBottom:'1px solid var(--b1)', background:'rgba(59,130,246,0.03)' }}>
+                    <span style={{ fontSize:9, fontFamily:"'JetBrains Mono',monospace", fontWeight:700, letterSpacing:'0.10em', textTransform:'uppercase', color:'var(--blue2)' }}>DOCS — ENDPOINT CATEGORIES</span>
                   </div>
                   <div style={{ display:'grid', gridTemplateColumns:'repeat(5,1fr)' }}>
                     {CATEGORIES.filter(c => c.id !== 'overview').map(({ id, icon: Icon, label }, i, arr) => (
                       <button key={id} onClick={() => setActiveCategory(id)}
-                        style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:8, padding:'16px 8px', fontSize:9, fontFamily:"'JetBrains Mono',monospace", fontWeight:700, letterSpacing:'0.05em', textTransform:'uppercase', cursor:'pointer', border:'none', borderRight: i < arr.length-1 ? '1px solid var(--border)' : 'none', borderBottom: i < 5 ? '1px solid var(--border)' : 'none', background: activeCategory===id ? 'rgba(59,130,246,0.10)' : 'transparent', color: activeCategory===id ? 'var(--blue-bright)' : 'var(--text-muted)', transition:'all 0.18s' }}>
-                        <Icon style={{ width:16, height:16, color: activeCategory===id ? 'var(--blue)' : 'var(--text-muted)' }} />
+                        style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:7, padding:'14px 8px', fontSize:9, fontFamily:"'JetBrains Mono',monospace", fontWeight:700, letterSpacing:'0.05em', textTransform:'uppercase', cursor:'pointer', border:'none', borderRight: i < arr.length-1 ? '1px solid var(--b1)' : 'none', borderBottom: i < 5 ? '1px solid var(--b1)' : 'none', background: activeCategory===id ? 'rgba(59,130,246,0.10)' : 'transparent', color: activeCategory===id ? 'var(--blue2)' : 'var(--tm)', transition:'all 0.15s' }}>
+                        <Icon style={{ width:15, height:15, color: activeCategory===id ? 'var(--blue)' : 'var(--tm)' }} />
                         {label}
                       </button>
                     ))}
