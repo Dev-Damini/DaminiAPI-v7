@@ -1,0 +1,174 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* ================================================================
+     Daminī API — WHITE-FIRST design system
+     Default = light. Dark mode via .dark class on <html>.
+  ================================================================ */
+  :root {
+    --background: 0 0% 97%;
+    --foreground: 0 0% 6%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 6%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 6%;
+    --primary: 0 0% 6%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 94%;
+    --secondary-foreground: 0 0% 20%;
+    --muted: 0 0% 94%;
+    --muted-foreground: 0 0% 44%;
+    --accent: 0 0% 90%;
+    --accent-foreground: 0 0% 6%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 88%;
+    --input: 0 0% 94%;
+    --ring: 0 0% 20%;
+    --radius: 0.75rem;
+
+    /* Surface tokens */
+    --canvas:        #f2f2f2;
+    --panel:         #ffffff;
+    --panel-inner:   #fafafa;
+    --terminal-bg:   #111111;
+    --header-bg:     rgba(255,255,255,0.96);
+    --border-subtle: rgba(0,0,0,0.09);
+    --border-medium: rgba(0,0,0,0.15);
+    --btn-ghost:     rgba(0,0,0,0.04);
+    --text-primary:  rgba(10,10,10,0.92);
+    --text-secondary:rgba(10,10,10,0.58);
+    --text-muted:    rgba(10,10,10,0.38);
+
+    /* Semantic operational colors */
+    --status-success:        #059669;
+    --status-success-bg:     rgba(5,150,105,0.09);
+    --status-success-border: rgba(5,150,105,0.22);
+    --status-error:          #dc2626;
+    --status-error-bg:       rgba(220,38,38,0.08);
+    --status-error-border:   rgba(220,38,38,0.22);
+    --status-warn:           #d97706;
+    --status-warn-bg:        rgba(217,119,6,0.09);
+    --status-warn-border:    rgba(217,119,6,0.22);
+
+    /* Method badge colors */
+    --badge-get-bg:   #166534;
+    --badge-get-text: #ffffff;
+    --badge-post-bg:  #1e3a8a;
+    --badge-post-text:#ffffff;
+  }
+
+  /* ── Dark mode override ─────────────────────────────────── */
+  .dark {
+    --background: 0 0% 5%;
+    --foreground: 0 0% 93%;
+    --card: 0 0% 8%;
+    --card-foreground: 0 0% 93%;
+    --popover: 0 0% 8%;
+    --popover-foreground: 0 0% 93%;
+    --primary: 0 0% 100%;
+    --primary-foreground: 0 0% 0%;
+    --secondary: 0 0% 12%;
+    --secondary-foreground: 0 0% 85%;
+    --muted: 0 0% 12%;
+    --muted-foreground: 0 0% 42%;
+    --accent: 0 0% 16%;
+    --accent-foreground: 0 0% 93%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 16%;
+    --input: 0 0% 12%;
+    --ring: 0 0% 75%;
+
+    --canvas:         #090909;
+    --panel:          #111111;
+    --panel-inner:    #0d0d0d;
+    --terminal-bg:    #060606;
+    --header-bg:      rgba(9,9,9,0.96);
+    --border-subtle:  rgba(255,255,255,0.09);
+    --border-medium:  rgba(255,255,255,0.15);
+    --btn-ghost:      rgba(255,255,255,0.06);
+    --text-primary:   rgba(255,255,255,0.92);
+    --text-secondary: rgba(255,255,255,0.58);
+    --text-muted:     rgba(255,255,255,0.36);
+
+    --status-success:        #10b981;
+    --status-success-bg:     rgba(16,185,129,0.09);
+    --status-success-border: rgba(16,185,129,0.22);
+    --status-error:          #ef4444;
+    --status-error-bg:       rgba(239,68,68,0.09);
+    --status-error-border:   rgba(239,68,68,0.22);
+    --status-warn:           #f59e0b;
+    --status-warn-bg:        rgba(245,158,11,0.09);
+    --status-warn-border:    rgba(245,158,11,0.22);
+
+    --badge-get-bg:   #14532d;
+    --badge-get-text: #86efac;
+    --badge-post-bg:  #1e3a8a;
+    --badge-post-text:#93c5fd;
+  }
+}
+
+@layer base {
+  * { @apply border-border; }
+
+  html { color-scheme: light; }
+  html.dark { color-scheme: dark; }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  code, pre, .mono {
+    font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+  }
+
+  ::-webkit-scrollbar { width: 4px; height: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.18); border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,0.32); }
+  .dark ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.16); }
+  .dark ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.28); }
+}
+
+@layer utilities {
+  /* Pulse dot */
+  .pulse-active { animation: pulseActive 2s ease-in-out infinite; }
+
+  /* Typing cursor */
+  .typing-cursor::after {
+    content: '|';
+    animation: blink 1s step-end infinite;
+    color: rgba(0,0,0,0.3);
+  }
+  .dark .typing-cursor::after { color: rgba(255,255,255,0.4); }
+}
+
+@keyframes pulseActive {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(5,150,105,0.55); opacity: 1; }
+  50%       { box-shadow: 0 0 0 5px rgba(5,150,105,0); opacity: 0.8; }
+}
+/* dark pulseActive handled by App.css */
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in-up { animation: fadeInUp 0.28s ease-out forwards; }
+.slide-down { animation: slideDown 0.2s ease-out forwards; }
